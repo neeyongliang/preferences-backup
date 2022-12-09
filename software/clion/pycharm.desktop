@@ -1,0 +1,18 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PyCharm
+GenericName=Text Editor
+Comment=Sophisticated text editor for code, markup and prose
+Exec=bash -c "exec /opt/pycharm/bin/pycharm.sh"
+Terminal=false
+MimeType=text/plain;
+Icon=/opt/pycharm/bin/pycharm.png
+Categories=TextEditor;Development;IDE;
+StartupNotify=true
+Actions=Window;Document;
+
+[Desktop Action Window]
+Name=New Window
+Exec=bash -c "exec /opt/pycharm/bin/pycharm.sh"
+OnlyShowIn=Unity;

@@ -1,0 +1,9 @@
+// CLion->Settings->Editor->File and Code Templates->Includes
+#if ($HEADER_COMMENTS)
+// Copyright $YEAR, CDOS.
+// All rights reserved.
+//
+// Author: YOU_EMAIL ($USER_NAME)
+//
+// This file is for
+#end

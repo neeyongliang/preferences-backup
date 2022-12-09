@@ -1,0 +1,5 @@
+# wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+# Fingerprint: 6084 F3CF 814B 57C1 CF12 EFD5 15CF 4D18 AF4F 7421
+# Jessie (Debian stable) - Last update : Sun, 16 Jul 2017 22:22:53 UTC / Revision: 308139
+deb http://apt.llvm.org/jessie/ llvm-toolchain-jessie main
+deb-src http://apt.llvm.org/jessie/ llvm-toolchain-jessie main

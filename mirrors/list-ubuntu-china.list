@@ -1,0 +1,87 @@
+# THIS IS UBUNTU 14.04 LTS SOURCE LIST SUIT IN CHINA.
+# YOU ALSO CAN CHANGE IT TO FIT YOU UBUNTU VERSION, LIKE:trusty, vivid, wily, xenial
+# WHEN YOU WANT USE IT, PLEASE BACKUP DEFAULT SOURCE LIST AND REPLACE IT.
+# EXAMPLE:
+# $ sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+# $ sudo mv ./Ubuntu_14.04_LTS_China_sources.list /etc/apt/sources.list
+#
+# if NO_PUBKEY 3B4FE6ACC0B21F32
+#   apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 3B4FE6ACC0B21F32
+#
+# llvm suit for Ubuntu 16.04, other version need visit apt.llvm.org 
+# maybe add gpg.key first:
+# wget -O - http://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial main
+deb-src http://apt.llvm.org/xenial/ llvm-toolchain-xenial main
+# 3.9
+deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-3.9 main
+deb-src http://apt.llvm.org/xenial/ llvm-toolchain-xenial-3.9 main
+# 4.0
+deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-4.0 main
+deb-src http://apt.llvm.org/xenial/ llvm-toolchain-xenial-4.0 main
+
+# official
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial main restricted
+
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-updates main restricted
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-updates main restricted
+
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial universe
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial universe
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-updates universe
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-updates universe
+
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial multiverse
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial multiverse
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-updates multiverse
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-updates multiverse
+
+deb http://cn.archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://cn.archive.ubuntu.com/ubuntu/ xenial-backports main restricted universe multiverse
+
+deb http://archive.canonical.com/ubuntu xenial partner
+deb-src http://archive.canonical.com/ubuntu xenial partner
+
+deb http://security.ubuntu.com/ubuntu xenial-security main restricted
+deb-src http://security.ubuntu.com/ubuntu xenial-security main restricted
+deb http://security.ubuntu.com/ubuntu xenial-security universe
+deb-src http://security.ubuntu.com/ubuntu xenial-security universe
+deb http://security.ubuntu.com/ubuntu xenial-security multiverse
+deb-src http://security.ubuntu.com/ubuntu xenial-security multiverse
+
+# 163
+deb http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ xenial-backports main restricted universe multiverse
+
+# aliyun
+deb http://mirrors.aliyun.com/ubuntu/ quantal main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ quantal-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ quantal-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ quantal-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ quantal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ quantal-backports main restricted universe multiverse
+
+#souhu 
+deb http://mirrors.sohu.com/ubuntu trusty main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu trusty-backports main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu trusty-proposed main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu trusty-security main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu trusty-updates main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu trusty main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu trusty-backports main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu trusty-proposed main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu trusty-security main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu trusty-updates main restricted universe multiverse

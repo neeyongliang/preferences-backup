@@ -1,0 +1,548 @@
+" ~/.vimrc
+" Add alias vi='vim' in .bashrc or .zshrc or /etc/profile
+" Create by yongliang
+" Dec.13, 2015 first release
+" Oct.31, 2018 update
+" Rule
+"   Don't put anything in your .vimrc you don't understand!
+
+" ============================== Previous Setting ==============================
+
+" this part must be on the top
+if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
+  set fileencodings=ucs-bom,utf-8,gbk18030,latin1
+endif
+
+set nocompatible                    " be iMproved, use vim to do as vi, required
+filetype off                        " required
+set backspace=indent,eol,start      " use backspace in Insert mode
+if has('mouse')
+  set mouse=a                  " hold Shift, X will replace vim tack over action
+  set mousemodel=popup
+endif
+set nowrap                                      " set no wrap when line too long
+set clipboard=unnamed
+syntax on
+set cindent                                          " auto indent in C language
+set nomagic                                 " allow use no \ character in search
+set fileencodings=utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+let &colorcolumn="81,"."121"
+" not use arrow key
+map <Left> <Nop>
+map <Right> <Nop>
+map <Up> <Nop>
+map <Down> <Nop>
+
+" =================================== Vundle ===================================
+
+" install bundle
+"   mkdir -p /usr/share/vim/bundle
+"   cd /usr/share/vim/bundle
+"   git clone https://github.com/VundleVim/Vundle.vim.git Vundle.vim
+" set the runtime path to include and initialize, like /usr/local.
+set rtp+=/usr/share/vim/bundle/Vundle.vim
+
+" call vundle#begin() to download in default path
+" keep Plugin commands between vundle#begin/end.
+call vundle#begin('/usr/share/vim/bundle')
+
+Plugin 'VundleVim/Vundle.vim'               " let Vundle manage Vundle, required
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'google/yapf', { 'rtp': 'plugins/vim' }
+Plugin 'scrooloose/nerdtree'
+Plugin 'w0rp/ale' " replace Plugin 'scrooloose/syntastic'
+Plugin 'liuchengxu/vim-better-default'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'majutsushi/tagbar'
+Plugin 'sjl/gundo.vim'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'rkulla/pydiction'
+Plugin 'vim-scripts/a.vim'
+Plugin 'richq/cmake-lint'                  " need use pip/pip3 install cmakelint
+Plugin 'junegunn/vim-easy-align'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'scrooloose/nerdcommenter'
+" alternative
+" Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'tpope/vim-fugitive', vim-fugitive will show git info
+" Plugin 'mattn/emmet-vim'
+" Plugin 'Valloric/YouCompleteMe', not recommend
+" if need, use vim-youcompleteme.deb and vam install youcompleteme
+" all of your Plugins must be added before the following line
+call vundle#end()                                                     " required
+
+filetype plugin indent on                                             " required
+" to ignore plugin indent changes, instead use:
+" filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins;append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+" ============================== Plugin Setting ================================
+
+" CtrlP settings
+  "let g:ctrlp_map = '<leader>p'
+  "let g:ctrlp_cmd = 'CtrlP'
+  map <leader>f :CtrlPMRU<CR>
+  let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ }
+  let g:ctrlp_working_path_mode=0
+  let g:ctrlp_match_window_bottom=1
+  let g:ctrlp_max_height=15
+  let g:ctrlp_match_window_reversed=0
+  let g:ctrlp_mruf_max=500
+  let g:ctrlp_follow_symlinks=1
+  let g:ctrlp_regexp = 0
+
+  " more help
+  " ctrl + j/k: up / down
+  " ctrl + x: split open
+  " ctrl + v: vsplit open
+  " ctrl + t: open in new tab
+
+" Airline settings
+  " must install Powerline fonts, url:
+  " https://github.com/powerline/fonts
+  let g:airline_powerline_fonts=1
+  let g:airline#extensions#tabline#enabled = 1
+  set guifont=Source\ Code\ Pro\ for\ Powerline
+  " let g:airline_theme="luna"
+  let g:airline#extensions#tabline#buffer_nr_show = 1
+  " ignore follow settings
+  let g:airline#extensions#whitespace#enabled = 0
+  let g:airline#extensions#whitespace#symbol = '!'
+
+" NERDTree settings
+  :map <C-f> :NERDTree<CR>
+  " ctrl + w + w  switch tabs
+  " o     open or close a folder or input go
+  " i      open file vertical split window or input gi
+  " s     oepn file horizonal split window or input gs
+  " t     create new tab,and jump
+  " T     create new tab,but not jump
+  " P     jump root
+  " p     jump father
+  " q     close NerdTree
+  " K     same catalog first child
+  " J      same catalog last child
+  " :tabc close current tab
+  " :tabo close other tab
+  " :tabs check all open tab
+  " :tabp preview tab
+  " :tabn next tab
+  " gt, gT command add gxxx  means preview the file
+
+" tarbar settings
+  " tarbar need ctags
+  let g:tagbar_ctags_bin='/usr/bin/ctags'
+  let g:tagbar_width=30
+  let g:tagbar_right=1
+  "auto open tagbar
+  autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+  "key map tagbar toggle
+  map <F8> :TagbarToggle<CR>
+  " p: jump to tag location, and keep cursor stay in tagbar
+  " zj: jump next folder
+  " zk: jump previous folder
+  " s: change sort ways
+
+" emmet-vim settings
+  " let g:user_emmet_mode='n'    "only enable normal mode functions.
+  " let g:user_emmet_mode='inv'  "enable all functions, which is equal to
+  " let g:user_emmet_mode='a'    "enable all function in all mode.
+  " let g:user_emmet_install_global = 0
+  " autocmd FileType html,css EmmetInstall
+  " let g:user_emmet_leader_key = '<C-e>'    " Control + e + ,
+
+" ale settings
+  function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'OK' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+  endfunction
+
+  set statusline+=%#warningmsg#
+  set statusline+=%{LinterStatus()}
+  set statusline+=%*
+
+  " general options
+  let g:ale_sign_column_always = 1
+  let g:ale_set_highlights = 0
+  let g:ale_sign_error = '✗'
+  let g:ale_sign_warning = '⚠'
+  " let g:ale_statusline_format = ['✗ %d', '⚡ %d', '✔ OK']
+  let g:ale_statusline_format = ['✗ %d', '⚠ %d', '✔ OK']
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  " let g:ale_lint_on_text_changed = 'never'
+  let g:ale_lint_on_enter = 1
+  let g:ale_lint_on_save = 1
+  " let g:ale_set_quickfix = 1
+  let g:ale_set_loclist = 1
+  let g:ale_warn_about_trailing_whitespace = 1
+
+  " key bindings
+  nmap sp <Plug>(ale_previous_wrap)
+  nmap sn <Plug>(ale_next_wrap)
+  nmap <Leader>s :ALEToggle<CR> " toggle
+  nmap <Leader>d :ALEDetail<CR> " detail
+
+  " checkers
+  let g:ale_linters = {
+    \  'c' : ['gcc'],
+    \  'python' : ['pylint'],
+    \  'cpp' : ['clang'],
+    \}
+  let g:ale_c_gcc_options = '-std=gnu99 -Wall `pkg-config --cflags --libs gtk+-3.0`'
+  let g:ale_cpp_gcc_options = '-std=cpp11 -Wall `pkg-config --cflags --libs gtk+-3.0`'
+  let g:ale_cpp_clang_options = '-std=cpp11 -Wall'
+  " let g:ale_python_pylint_options = '--rcfile=~/.pylintrc'
+  let g:ale_c_build_dir_names=['build', 'bin']
+
+" a.vim help
+  " :A switches to the header file corresponding to the current file being edited (or vise versa)
+  " :AS splits and switches
+  " :AV vertical splits and switches
+  " :AT new tab and switches
+  " :AN cycles through matches
+  " :IH switches to file under cursor
+  " :IHS splits and switches
+  " :IHV vertical splits and switches
+  " :IHT new tab and switches
+  " :IHN cycles through matches
+  " <Leader>ih switches to file under cursor
+  " <Leader>is switches to the alternate file of file under cursor (e.g. on  <foo.h> switches to foo.cpp)
+  " <Leader>ihn cycles through matches
+
+
+" syntastic settings
+  " " use gcc in syntastic
+  " set statusline+=%#warningmsg#
+  " set statusline+=%{SyntasticStatuslineFlag()}
+  " set statusline+=%*
+
+  " let g:syntastic_c_include_dirs=['/usr/include/']
+  " let g:syntastic_c_config_file = $HOME.'.syntastic_clang_check_config'
+  " let g:syntastic_c_compiler = 'clang'
+  " let g:syntastic_c_compiler_options = ' -std=gnu99'
+  " let g:syntastic_c_remove_include_errors = 1
+  " let g:syntastic_c_check_header = 1
+  " let g:syntastic_c_auto_refresh_includes = 1
+  " let g:syntastic_always_populate_loc_list = 1
+  " let g:syntastic_auto_loc_list = 1
+  " let g:syntastic_check_on_open= 0
+  " let g:syntastic_error_symbol = '✗'
+  " let g:syntastic_warning_symbol = '⚠'
+  " let g:syntastic_auto_loc_list = 1
+  " let g:syntastic_loc_list_height = 5
+  " let g:syntastic_enable_highlighting = 0
+  " if you want kinds checkers
+  " let g:syntastic_c_checkers = ['clang_check','gcc','make']
+  " let g:syntastic_enable_highlighting = 0
+  " let g:syntastic_cpp_checkers = ['cpplint']
+  " let g:syntastic_cpp_cpplint_exec = 'cpplint'
+  " let g:syntastic_cpp_cpplint_thres = 5
+  " let g:syntastic_cpp_cpplint_args = '--verbose=3'
+  " let g:syntastic_python_checkers=['pylint']
+  " let g:syntastic_python_pylint_args='--disable=C0111,R0903,C0301'
+  " let g:syntastic_aggregate_errors = 1
+  " let g:syntastic_enable_balloons = 1
+  " nnoremap <F7> :SyntasticToggleMode <CR>
+
+" Pydiction
+  let g:pydiction_location = '/usr/share/vim/bundle/pydiction/complete-dict'
+  let g:pydiction_menu_height = 3
+
+" YouCompleteMe settings
+  " use clang in ycm
+  " " map <F6> :YcmCompleter GoToDefinition<CR>
+  " " nmap <F2> :YcmDiags<CR>
+  " find global configure file
+  " let g:ycm_global_ycm_extra_conf = '/usr/lib/ycmd/ycm_extra_conf.py'
+  " forbid syntastic check python file
+  " let g:syntastic_ignore_files=[".*\.py$"]
+  " use ctags file
+  " " let g:ycm_collect_identifiers_from_tag_files = 1
+  " Start complete, change default hot key
+  " default CTRL+space，change to Shift+space
+  " " let g:ycm_key_invoke_completion = '<S-space>'
+  " keywords completion
+  "let g:ycm_seed_identifiers_with_syntax = 1
+  " set completeopt-=preview
+  " do as other IDE action
+  " " set completeopt=longest,menu
+  " when vim start, show ycm_extra_conf file info
+  " " let g:ycm_confirm_extra_conf=1
+  " no cache
+  " " let g:ycm_cache_omnifunc=0
+  " complete in comments
+  " " let g:ycm_complete_in_comments=1
+  " input first character start completion
+  " " let g:ycm_min_num_of_chars_for_completion=1
+  " error symbol
+  " " let g:ycm_error_symbol='✗'
+  " warning symbol
+  " " let g:ycm_warning_symbol='⚠'
+  " no query ultisnips template，if necessary, set equal 1
+  " let g:ycm_use_ultisnips_completer=0
+
+  " let ycm and syntastic work together
+  " " let g:ycm_register_as_syntastic_checker = 0
+
+" EasyAlign Settings
+  " ,a=            align by =
+  " ,a:            align by : like json or map
+
+  " default left align
+  " ,a<space>     align by first space
+  " ,a2<space>    align by second space
+  " ,a-<space>    align by last space
+  " ,a-2<space>   align by last second space
+  " ,a*<space>    align all space
+
+  " right align
+  " ,a<Enter>*<space>
+
+" Rainbow Parentheses Settings
+  let g:rbpt_colorpairs = [
+      \ ['brown',       'RoyalBlue3'],
+      \ ['Darkblue',    'SeaGreen3'],
+      \ ['darkgray',    'DarkOrchid3'],
+      \ ['darkgreen',   'firebrick3'],
+      \ ['darkcyan',    'RoyalBlue3'],
+      \ ['darkred',     'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['brown',       'firebrick3'],
+      \ ['gray',        'RoyalBlue3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['Darkblue',    'firebrick3'],
+      \ ['darkgreen',   'RoyalBlue3'],
+      \ ['darkcyan',    'SeaGreen3'],
+      \ ['darkred',     'DarkOrchid3'],
+      \ ['red',         'firebrick3'],
+      \ ]
+  let g:rbpt_max = 16
+  let g:rbpt_loadcmd_toggle = 0
+
+" Nerdcomment Settings
+  let g:NERDSpaceDelims=1
+  " default key bindings
+  " <leader>cc   comment
+  " <leader>cu   uncomment
+  " <leader>c<space>  toggle comment
+  " <leader>cy   copy first, and comment
+
+" =============================== Other Settings ===============================
+
+" Colors
+" /usr/share/vim/vim_VERSION/colors,default are following:
+" blue, darkblue, default, delek, desert, elflord, evening,koehler
+" morning, murphy, pablo, peachpuff, ron, shine, slate, torte, zellner
+" also can use you favorite scheme: molokai or solarized
+  if has("syntax")
+    syntax enable
+  endif
+
+  if has("termguicolor")
+    set termguicolor
+  endif
+
+  set background=dark
+  set t_Co=256
+  " colorscheme solarized
+  " let g:solarized_termcolors=256
+  " colorscheme molokai
+  colorscheme gruvbox
+
+" Space and Tab
+  set tabstop=4           " tab is 4 spaces
+  set expandtab           " use space replace tab
+
+" Status Line
+  " replace air-line
+  set laststatus=2
+  set statusline+=\ <==>\ %y\ <==>\ format:\ %{&ff};\ <==>\ [%c,%l]
+  set statusline+=\ <==>\ %4*\ %F\ %*
+
+" UI config
+  set number              " show line numbers
+  set showcmd             " show command in bottom bar
+  " set cursorline        " highlight current line, but fuzzy with under_line
+  filetype indent on      " load filetype-specific indent files
+  set wildmenu            " visual autocomplete for command menu
+  set lazyredraw          " when run MACRO command，not review layout,
+                          " after command complete，relayout once time
+  set showmatch           " highlight matching [{()}], paterns
+
+
+" Searching
+  set incsearch           " search as characters are entered
+  set hlsearch            " highlight matches
+  " turn off search highlight
+  " set nohlsearch
+
+
+" Folding
+  set foldenable          " enable folding
+  set foldlevelstart=10   " open most folds by default
+  set foldnestmax=10      " 10 nested fold max
+
+
+" Movement
+  " " move vertically by visual line
+  " " nnoremap only work in vim-normal mode,alike vnoremap, inoremap
+  " nnoremap j gj
+  " nnoremap k gk
+  " " move to beginning/end of line
+  " nnoremap B ^
+  " nnoremap E $
+  " " $/^ doesn't do anything
+  " nnoremap $ <nop>
+  " nnoremap ^ <nop>
+  " " highlight last inserted text
+  " nnoremap gV `[v`]
+
+
+" Leader Shortcuts
+  " " :map <Leader>A oanother line<Esc> equal :map \A oanother line<Esc>
+  " " <Leader> default is \
+  " let mapleader=","       " leader is comma
+  " " ff is escape
+  " inoremap ff <esc>
+  " " toggle gundo
+  " nnoremap <leader>u :GundoToggle<CR>
+  " " edit vimrc/zshrc and load vimrc bindings
+  " nnoremap <leader>ev :vsp $MYVIMRC<CR>
+  " nnoremap <leader>ez :vsp ~/.zshrc<CR>
+  " nnoremap <leader>sv :source $MYVIMRC<CR>
+  " " save session
+  nnoremap <leader>s :mksession<CR>
+  " " open ag.vim
+  " nnoremap <leader>a :Ag
+  " NERDTree
+  " nnoremap <leader>u :NERDTree<CR>
+
+" Lauch Config
+"   call pathogen#infect()                      " use pathogen
+"   call pathogen#runtime_append_all_bundles()  " use pathogen
+
+" Tmux
+  " allows cursor change in tmux mode
+  if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  endif
+
+" Clang Format Settings
+  let g:clang_format#detect_style_file = 1
+  let g:clang_format#code_style = "mozilla"
+  let g:clang_format#command = "clang-format-3.9"
+  let g:clang_format#auto_format_on_insert_leave = 0
+
+  " map to <Leader>cf in C++ code
+  autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+  autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+  " if you install vim-operator-user
+  " autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+  " Toggle auto formatting:
+  nmap <Leader>C :ClangFormatAutoToggle<CR>
+
+" YAPF Settings
+  " a python format tool by google
+  map <C-Y> :call yapf#YAPF()<cr>
+  " imap <C-Y> <c-o>:call yapf#YAPF()<cr>
+
+" Custom Functions
+  " toggle between number and relativenumber
+  function! ToggleNumber()
+  if(&relativenumber == 1)
+    set norelativenumber
+    set number
+  else
+    set relativenumber
+  endif
+  endfunc
+  nnoremap <C-l> :call ToggleNumber()<cr>
+
+  " map <F3> :w<CR>
+  " map <F4> :call CompileC()<CR>
+  " function! CompileC()
+  " let config_param=" `pkg-config --cflags --libs glib-2.0 gtk+-3.0`"
+  " exec ':w !gcc % -o %<'.config_param
+  " endfunc
+  " map <F5> :make<CR>
+
+" Autogroups
+  augroup configgroup
+  autocmd!
+  autocmd VimEnter * highlight clear SignColumn
+  autocmd Filetype gitcommit setlocal spell textwidth=72
+  autocmd FileType java setlocal noexpandtab
+  autocmd FileType java setlocal list
+  autocmd FileType java setlocal listchars=tab:+\ ,eol:-
+  autocmd FileType java setlocal formatprg=par\ -w80\ -T4
+  autocmd FileType php setlocal expandtab
+  autocmd FileType php setlocal list
+  autocmd FileType php setlocal listchars=tab:+\ ,eol:-
+  autocmd FileType php setlocal formatprg=par\ -w80\ -T4
+  autocmd FileType ruby setlocal tabstop=2
+  autocmd FileType ruby setlocal shiftwidth=2
+  autocmd FileType ruby setlocal softtabstop=2
+  autocmd FileType ruby setlocal commentstring="\ %s
+  autocmd FileType python setlocal commentstring="\ %s
+  autocmd FileType python setlocal tabstop=4
+  autocmd FileType python setlocal softtabstop=4
+  autocmd FileType python setlocal shiftwidth=4
+  autocmd FileType python setlocal textwidth=79
+  autocmd FileType python setlocal expandtab
+  autocmd FileType python setlocal fileformat=unix
+  autocmd BufEnter *.cls setlocal filetype=java
+  autocmd BufEnter *.zsh-theme setlocal filetype=zsh
+  autocmd BufEnter Makefile setlocal noexpandtab
+  autocmd BufEnter *.sh setlocal tabstop=2
+  autocmd BufEnter *.sh setlocal shiftwidth=2
+  autocmd BufEnter *.sh setlocal softtabstop=2
+  autocmd BufRead,BufNewFile *.html,*.js setlocal shiftwidth=2
+  autocmd BufRead,BufNewFile *.html,*.js setlocal tabstop=2
+  autocmd BufWritePre * :%s/\s\+$//e
+  augroup END
+
+" Quickfix settings
+  nmap <leader>cn :cn<cr>
+  nmap <leader>cp :cp<cr>
+  nmap <leader>cw :cw 10<cr>
+
+" Backups
+
+" Wrapping It Up
+  " Don't put anything in your .vimrc you don't understand!
+  " :help [setting] is your best friend.
+
+" Refer
+  " article--http://dougblack.io/words/a-good-vimrc.html
+  " Twitter--https://twitter.com/dougblackio
+
+" Fix Settings
+  runtime! plugin/default.vim
+  set norelativenumber

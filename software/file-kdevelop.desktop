@@ -1,0 +1,11 @@
+[Desktop Entry]
+Comment=
+Terminal=false
+Name=KDevelop
+Name[zh_CN]=KDevelop
+Exec=/opt/KDevelop.AppImage
+Type=Application
+Icon=/usr/share/pixmaps/nfs-screenshot.png
+Categories=Development;IDE;
+GenericName[zh_CN]=KDevelop is a free software integrated development environment (IDE) developed under the KDE Umbrella.
+Comment[zh_CN]=A cross-platform IDE for C, C++, Python, JavaScript and PHP

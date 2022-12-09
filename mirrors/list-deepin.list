@@ -1,0 +1,9 @@
+# import key
+# wget http://packages.linuxdeepin.com/deepin/project/deepin-keyring.gpg
+# gpg --import deepin-keyring.gpg
+# gpg --list-keys
+# sudo gpg --export --armor PUBLIC_KEY_FROM_LIST | sudo apt-key add -
+#
+#
+deb [by-hash=force] http://packages.deepin.com/deepin unstable main contrib non-free
+# deb-src http://packages.deepin.com/deepin unstable main contrib non-free

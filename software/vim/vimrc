@@ -1,0 +1,116 @@
+" All system-wide defaults are set in $VIMRUNTIME/debian.vim and sourced by
+" the call to :runtime you can find below.  If you wish to change any of those
+" settings, you should do it in this file (/etc/vim/vimrc), since debian.vim
+" will be overwritten everytime an upgrade of the vim packages is performed.
+" It is recommended to make changes after sourcing debian.vim since it alters
+" the value of the 'compatible' option.
+
+runtime! debian.vim
+
+" Vim will load $VIMRUNTIME/defaults.vim if the user does not have a vimrc.
+" This happens after /etc/vim/vimrc(.local) are loaded, so it will override
+" any settings in these files.
+let g:skip_defaults_vim = 1
+
+" =========== Plug =============
+
+" Install vim-plug
+" cd /usr/share/vim/vim81/autoload
+" sudo wget http://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+" sudo mkdir -p /usr/share/vim/plug
+
+" For Linux
+" call plug#begin("/usr/share/vim/plug")
+" For mac
+call plug#begin()
+Plug 'http://github.com/liuchengxu/vim-better-default.git'
+Plug 'http://github.com/ntpeters/vim-better-whitespace.git'
+Plug 'http://github.com/tomasiser/vim-code-dark.git'
+Plug 'http://github.com/liuchengxu/vim-which-key.git'
+call plug#end()
+
+" :PlugInstall
+" :PlugUpdate
+" :PlugClean
+" :PlugStatus
+
+" =========== Settings ===========
+if has("syntax")
+  syntax on
+endif
+
+if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
+  set fileencodings=ucs-bom,utf-8,gbk18030,latin1
+endif
+
+" set backspace=indent,eol,start
+if has('mouse')
+  set mouse=a
+  set mousemodel=popup
+endif
+
+filetype plugin indent on
+set autowrite
+set background=dark
+set cindent
+set clipboard=unnamed
+set expandtab
+set hidden                      " Hide buffers when they are abandoned
+set ignorecase                  " Do case insensitive matching
+set incsearch                   " Incremental search
+set nocompatible
+set nomagic
+set nornu
+set nowrap
+set paste
+set shiftwidth=4
+set showcmd                     " Show (partial) command in status line.
+set showmatch                   " Show matching brackets.
+set smartcase                   " Do smart case matching
+set smarttab
+set softtabstop=4
+set t_Co=256
+set t_ut=
+set tabstop=4
+set timeoutlen=500
+set wildmenu
+colorscheme codedark
+
+" Source a global configuration file if available
+if filereadable("/etc/vim/vimrc.local")
+  source /etc/vim/vimrc.local
+endif
+
+
+" for other
+
+" =========== Other ==============
+
+
+" ============= Keys =============
+" for vim-which-key
+set nocompatible
+let g:mapleader=" "
+let g:maplocalleader = ","
+
+nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<cr>
+vnoremap <silent> <localleader> :<c-u>WhichKey ','<cr>
+let g:which_key_map = {}
+
+let g:which_key_map.f = { 'name' : '+file' }
+
+nnoremap <silent> <leader>fs :update<CR>
+let g:which_key_map.f.s = 'save-file'
+
+nnoremap <silent> <leader>fd :e $MYVIMRC<CR>
+let g:which_key_map.f.d = 'open-vimrc'
+
+nnoremap <silent> <leader>oq  :copen<CR>
+nnoremap <silent> <leader>ol  :lopen<CR>
+let g:which_key_map.o = {
+      \ 'name' : '+open',
+      \ 'q' : 'open-quickfix',
+      \ 'l' : 'open-locationlist',
+      \ }
+
+call which_key#register('<Space>', 'g:which_key_map')

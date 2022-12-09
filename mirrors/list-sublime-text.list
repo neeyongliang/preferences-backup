@@ -1,0 +1,5 @@
+# file name: sublime-text.list
+# help url: https://www.sublimetext.com/docs/3/linux_repositories.html
+# GPG key: wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+# usage: cp file and rename, run sudo apt-get update and install it
+deb https://download.sublimetext.com/ apt/stable/

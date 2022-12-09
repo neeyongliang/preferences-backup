@@ -1,0 +1,18 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Clion
+GenericName=Text Editor
+Comment=Sophisticated text editor for code, markup and prose
+Exec=bash -c "exec /opt/clion/bin/clion.sh"
+Terminal=false
+MimeType=text/plain;
+Icon=/opt/clion/bin/clion.svg
+Categories=TextEditor;Development;IDE;
+StartupNotify=true
+Actions=Window;Document;
+
+[Desktop Action Window]
+Name=New Window
+Exec=bash -c "exec /opt/clion/bin/clion.sh"
+OnlyShowIn=Unity;
