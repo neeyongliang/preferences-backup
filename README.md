@@ -1,34 +1,25 @@
+# Preferences Backup
+
 ```sh
 .
 ├── LICENSE
 ├── README.md
 ├── mirrors
-│   ├── android-sdk.md
-│   ├── homebrew.md
-│   ├── pip
-│   │   ├── README.MD
-│   │   ├── aliyun
-│   │   │   └── pip
-│   │   ├── douban
-│   │   │   └── pip
-│   │   ├── tuna
-│   │   │   └── pip
-│   │   └── v2ex
-│   │       └── pip
+│   ├── list-debian.list
+│   ├── list-deepin.list
+│   ├── list-google-chrome.list
+│   ├── list-llvm.list
+│   ├── list-sublime-text.list
+│   ├── list-ubuntu-china.list
+│   ├── list-vscode.list
+│   ├── mirror-homebrew.md
+│   ├── mirror-npm.md
+│   ├── mirror-pip.md
+│   ├── mirror-rust.config
 │   ├── repo-centos-aliyun.repo
 │   ├── repo-epel-aliyun.repo
-│   ├── rust.config
-│   ├── source-list-debian-testing.list
-│   ├── source-list-debian.list
-│   ├── source-list-deepin.list
-│   ├── source-list-google-chrome.list
-│   ├── source-list-llvm.list
-│   ├── source-list-sublime-text.list
-│   ├── source-list-ubuntu-china.list
-│   ├── source-list-vscode.list
-│   ├── sublime-text.repo
-│   ├── taobao-npm.md
-│   └── vscode.repo
+│   ├── repo-sublime-text.repo
+│   └── repo-vscode.repo
 ├── scripts
 │   ├── after-install-centos.sh
 │   ├── after-install-debian.sh
@@ -48,9 +39,8 @@
 │   └── zshrc
 ├── software
 │   ├── clion
-│   │   ├── C\ File\ Header
+│   │   ├── C-file-header-template
 │   │   ├── CMakeLists.txt
-│   │   ├── MyCLionStyle.xml
 │   │   ├── clion.desktop
 │   │   └── pycharm.desktop
 │   ├── file-kdevelop.desktop
@@ -59,15 +49,17 @@
 │   │   ├── python3.sublime-build
 │   │   └── sublime-package-recommend.md
 │   └── vim
+│       ├── codedark.vim
 │       ├── gruvbox.vim
 │       ├── molokai.vim
 │       ├── solarized.vim
 │       ├── vim-install-guide.md
-│       ├── vimrc-mac
+│       ├── vimrc
 │       └── vimrc.old
 └── terminal
     ├── alacritty.yml
     └── tmux.conf
 
 ```
-17 directories, 50 files
+
+8 directories, 49 files
