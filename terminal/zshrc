@@ -129,8 +129,13 @@ export HOMEBREW_BOTTLE_DOMAIN='https://mirrors.cloud.tencent.com/homebrew-bottle
 # export PATH="/usr/local/opt/qt/bin:$PATH"
 
 # for Debian
-DEBMAIL="neeyongliang@gmail.com"
-DEBFULLNAME="yongliang"
+# DEBMAIL="neeyongliang@gmail.com"
+# DEBFULLNAME="yongliang"
 
 # for GPG2
-alias gpg='gpg2'
+# alias gpg='gpg2'
+
+# for Terminal 
+# export https_proxy=http://127.0.0.1:9999
+# export http_proxy=http://127.0.0.1:9999
+# export all_proxy=socks5://127.0.0.1:9999
