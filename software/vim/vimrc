@@ -25,7 +25,7 @@ let g:skip_defaults_vim = 1
 call plug#begin()
 Plug 'http://github.com/liuchengxu/vim-better-default.git'
 Plug 'http://github.com/ntpeters/vim-better-whitespace.git'
-Plug 'http://github.com/tomasiser/vim-code-dark.git'
+" Plug 'http://github.com/tomasiser/vim-code-dark.git'
 Plug 'http://github.com/liuchengxu/vim-which-key.git'
 call plug#end()
 
@@ -53,7 +53,8 @@ filetype plugin indent on
 set autowrite
 set background=dark
 set cindent
-set clipboard=unnamed
+" set clipboard=unnamed
+set clipboard=unnamedplus
 set expandtab
 set hidden                      " Hide buffers when they are abandoned
 set ignorecase                  " Do case insensitive matching
@@ -114,3 +115,20 @@ let g:which_key_map.o = {
       \ }
 
 call which_key#register('<Space>', 'g:which_key_map')
+
+if exists('+colorcolumn')
+   set colorcolumn=100
+endif
+
+if has("linux")
+    " for C-c, C-v
+    vnoremap <C-x> "+x
+    vnoremap <C-S-v> "+p
+    vnoremap <C-S-c> "+y
+endif
+
+if has("macunix")
+    vnoremap <C-x> "+x
+endif
+
+
