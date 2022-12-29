@@ -22,10 +22,25 @@ createDir Softare
 
 echo "################# Custom choose #################"
 isUpdate=0
+isSublime=0
+isVScode=0
 read -r -p "Do you want run apt update?[N/Y]" ch
 case $ch in
 Y|y)
     isUpdate="1"
+    read -r -p "Do you want install vscode?[N/Y]" ch
+    case $ch in
+    Y|y)
+    isVScode="1"
+    ;;
+    esac
+
+    read -r -p "Do you want install sublime text?[N/Y]" ch
+    case $ch in
+    Y|y)
+    isSublime="1"
+    ;;
+    esac
 ;;
 esac
 
@@ -37,14 +52,6 @@ Y|y)
 ;;
 esac
 
-isSublime="1"
-read -r -p "Do you want install sublime text?[N/Y]" ch
-case $ch in
-N|n)
-isSublime="0"
-;;
-esac
-
 isQemu="0"
 read -r -p "Do you want install qemu?[N/Y]" ch
 case $ch in
@@ -53,19 +60,11 @@ isQemu="1"
 ;;
 esac
 
-isOhmyzsh="1"
-read -r -p "Do you want install oh my zsh?[N/Y]" ch
-case $ch in
-N|n)
-isOhmyzsh="0"
-;;
-esac
-
-isQt5="1"
+isQt5="0"
 read -r -p "Do you want install Qt5?[N/Y]" ch
 case $ch in
-N|n)
-isQt5="0"
+Y|y)
+isQt5="1"
 ;;
 esac
 
@@ -77,80 +76,80 @@ isRust="1"
 ;;
 esac
 
-# echo "DEBUG: $isUpdate, $isRust, $isQt5, $isSublime, $isQemu, $isOhmyzsh"
+# echo "DEBUG: $isUpdate, $isRust, $isQt5, $isSublime, $isQemu, $isVScode"
 
 echo "################# Install packages #################"
 if [[ "$isUpdate" == "1" ]]; then
-    sudo apt update
+    apt update
     echo "Instal wget, curl, apt-transport-https, gpg2..."
-    sudo apt install -y wget curl apt-transport-https gpg2 > /dev/null
-    echo "Add vscode repo..."
-    wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
-    echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vs-code.list
+    apt install -y wget curl apt-transport-https gnupg2
+    if [[ "$isVScode" == "1" ]]; then
+        echo "Add vscode repo..."
+        wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | apt-key add -
+        echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vs-code.list
+    fi
+
     if [[ "$isSublime" == "1" ]]; then
         echo "Add sublime repo..."
-        wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
-        echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+        wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg
+        echo "deb https://download.sublimetext.com/ apt/stable/" | tee /etc/apt/sources.list.d/sublime-text.list
     fi
-    sudo apt update > /dev/null
+    apt update
 else
     echo "skip update..."
-    sudo apt install -y wget curl apt-transport-https gpg2 > /dev/null
+    apt install -y wget curl apt-transport-https gnupg2
 fi
 
 if [[ "$isRemoveOld" == "1" ]]; then
     echo "remove old..."
-    sudo apt remove -y libreoffice-common unity-webapps-common thunderbird \
-    totem rhythmbox empathy brasero simple-scan gnome-mahjongg aisleriot \
+    apt remove -y unity-webapps-common \
+    totem rhythmbox empathy simple-scan gnome-mahjongg aisleriot \
     gnome-mines cheese transmission-common gnome-orca webbrowser-app gnome-sudoku \
-    deja-dup > /dev/null
+    deja-dup
 else
     echo "skip remove old..."
 fi
 
-sudo apt install -y git meld devhelp autojump \
+apt install -y git meld devhelp autojump \
 zsh unrar-free exuberant-ctags fonts-noto-cjk \
 screenfetch gitk unrar vim cmake lnav ttf-mscorefonts-installer \
 shellcheck fonts-firacode fonts-cascadia-code code \
-dpkg-dev gcc g++ build-essential d-feet dconf-editor meson > /dev/null
+dpkg-dev gcc g++ build-essential d-feet dconf-editor meson
 
 rm /etc/apt/sources.list.d/vs-code.list
 
 if [[ "$isSublime" == "1" ]]; then
     echo "Install sublime text..."
-    sudo apt install -y sublime-text
-fi
-
-if [[ "$isOhmyzsh" == "1" ]]; then
-    echo "Install ohmyzsh..."
-    sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+    apt install -y sublime-text sublime-merge
 fi
 
 if [[ "$isQemu" == "1" ]]; then
     echo "Install qemu..."
-    sudo apt install -y qemu qemu-user-static qeum-system-x86
+    apt install -y qemu qemu-user-static
 fi
 
 if [[ "$isQt5" == "1" ]]; then
     echo "Install Qt5..."
-    sudo apt install -y qtcreator qt5-doc-html qt5-assistant qt5-doc \
-    qttools5-dev-tools qt5-default > /dev/null
+    apt install -y qtcreator qt5-doc-html qt5-assistant qt5-doc \
+    qttools5-dev-tools qt5-default
 fi
 
 if [[ "$isRust" == "1" ]]; then
     echo "Install rust..."
-    sudo apt install -y cargo
+    apt install -y cargo
 fi
 
 echo "################### Clone backups ###################"
 cd ~/Github || exit 2
-git clone git@gitee.com:neeyongliang/perferences-fonts.git
-git clone git@gitee.com:neeyongliang/perferences-backup.git
+git clone https://gitee.com/neeyongliang/perferences-fonts.git
+git clone https://gitee.com/neeyongliang/perferences-backup.git
 
 echo "################### Install scripts ###################"
-sudo apt install -y python3-pip python3-dev python3-setuptools \
-python-setuptools python2-pip python2-dev python3-doc python2-doc > /dev/null
+apt install -y python3-pip python3-dev python3-setuptools \
+python-setuptools python2-pip python2-dev python3-doc python2-doc
 echo "pip3..."
-sudo pip3 install thefuck flake8
+pip3 install thefuck flake8
 # echo "pip2..."
-# sudo pip install --upgrade pip==20.3
+# pip install --upgrade pip==20.3
+
+
